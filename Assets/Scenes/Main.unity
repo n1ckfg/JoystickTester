@@ -131,7 +131,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 57665188}
-  - component: {fileID: 57665187}
   - component: {fileID: 57665189}
   m_Layer: 0
   m_Name: Tester
@@ -140,18 +139,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &57665187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 57665186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7da7dec65c6e43e4b569166b7d6694f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &57665188
 Transform:
   m_ObjectHideFlags: 0
@@ -174,14 +161,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 57665186}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abf460e666085411dba03032b1ba7f13, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b93ac629e9ef4a60ae0bba54ec66c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfJoysticks: 4
-  printZeroValues: 0
-  printInterval: 0.1
+  updateFrequency: 1
 --- !u!1 &367534628
 GameObject:
   m_ObjectHideFlags: 0

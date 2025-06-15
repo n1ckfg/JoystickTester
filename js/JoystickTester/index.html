@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html>
+	
+	<head>
+		<title></title>
+		<script>
+	        const gamepads = {};
+	        let animationFrameId = null;
+
+	        window.addEventListener("gamepadconnected", (event) => {
+	            const gamepad = event.gamepad;
+	            console.log(`Gamepad connected at index ${gamepad.index}: ${gamepad.id}. ${gamepad.buttons.length} buttons, ${gamepad.axes.length} axes.`);
+	            gamepads[gamepad.index] = gamepad;
+	            updateGamepadDisplay();
+	            startGamepadPolling();
+	            showMessage("success", `Gamepad "${gamepad.id}" connected!`);
+	        });
+
+	        window.addEventListener("gamepaddisconnected", (event) => {
+	            const gamepad = event.gamepad;
+	            console.log(`Gamepad disconnected from index ${gamepad.index}: ${gamepad.id}`);
+	            delete gamepads[gamepad.index];
+	            updateGamepadDisplay();
+	            showMessage("info", `Gamepad "${gamepad.id}" disconnected.`);
+	            if (Object.keys(gamepads).length === 0) {
+	                stopGamepadPolling();
+	                hideMessage();
+	            }
+	        });
+
+	        function gamepadPollingLoop() {
+	            const currentGamepads = navigator.getGamepads();
+
+	            for (let i = 0; i < currentGamepads.length; i++) {
+	                const gamepad = currentGamepads[i];
+	                if (gamepad) {
+	                    gamepads[gamepad.index] = gamepad;
+	                } else if (gamepads[i]) {
+	                    console.log(`Gamepad at index ${i} was implicitly disconnected.`);
+	                    delete gamepads[i];
+	                }
+	            }
+
+	            updateGamepadDisplay();
+
+	            animationFrameId = requestAnimationFrame(gamepadPollingLoop);
+	        }
+
+	        function startGamepadPolling() {
+	            if (!animationFrameId) { // Start if not already running
+	                animationFrameId = requestAnimationFrame(gamepadPollingLoop);
+	                console.log("Gamepad polling started.");
+	            }
+	        }
+
+	        function stopGamepadPolling() {
+	            if (animationFrameId) {
+	                cancelAnimationFrame(animationFrameId);
+	                animationFrameId = null;
+	                console.log("Gamepad polling stopped.");
+	            }
+	        }
+
+	        function updateGamepadDisplay() {
+	            const connectedGamepadIndices = Object.keys(gamepads);
+
+	            if (connectedGamepadIndices.length === 0) {
+	                console.log("Please connect a gamepad to see its status here.");
+	            } else {
+	                connectedGamepadIndices.forEach(index => {
+	                    const gamepad = gamepads[index];
+	                    if (gamepad) {
+	                        console.log(`Gamepad ${gamepad.index}: ${gamepad.id}`);
+
+	                        console.log(`Status: ${gamepad.connected ? 'Connected' : 'Disconnected'} (Mapping: ${gamepad.mapping || 'Standard'})`);
+
+	                        gamepad.buttons.forEach((button, i) => {
+	                            // `button.touched` for touch-sensitive buttons, `button.pressed` for physical press, `button.value` for analog
+	                            const isPressed = button.pressed; // or button.value > 0.5 for analog triggers
+	                            if (isPressed) console.log(`B${i}` + " " + `button-state ${isPressed ? 'button-pressed' : 'button-released'}`);
+	                        });
+
+	                        gamepad.axes.forEach((axis, i) => {
+	                            console.log(`Axis ${i}:` + " " + axis.toFixed(4));
+	                        });
+	                    }
+	                });
+	            }
+	        }
+
+	        window.addEventListener('load', () => {
+	            console.log("Window loaded. Checking for initial gamepads.");
+	            const initialGamepads = navigator.getGamepads();
+	            let foundConnected = false;
+	            for (let i = 0; i < initialGamepads.length; i++) {
+	                if (initialGamepads[i]) {
+	                    gamepads[initialGamepads[i].index] = initialGamepads[i];
+	                    foundConnected = true;
+	                }
+	            }
+	            updateGamepadDisplay();
+	            if (foundConnected) {
+	                startGamepadPolling();
+	            } else {
+	                console.log("Please connect a gamepad to see its status here.");
+	            }
+	        });
+		</script>
+	</head>
+
+	<body>
+	</body>
+
+</html>

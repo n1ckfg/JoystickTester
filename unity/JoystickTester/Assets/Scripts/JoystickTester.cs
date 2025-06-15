@@ -5,7 +5,6 @@ using UnityEngine;
 public class JoystickTester : MonoBehaviour
 {
 
-    public int numJoysticks = 1;
     public bool checkJoysticks = true;
     public bool checkKeys = true;
     public bool checkMouse = true;

@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 57665188}
   - component: {fileID: 57665189}
   m_Layer: 0
-  m_Name: Tester
+  m_Name: TESTER
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -166,7 +166,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b93ac629e9ef4a60ae0bba54ec66c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  updateFrequency: 1
+  numJoysticks: 1
+  checkJoysticks: 1
+  checkKeys: 1
+  checkMouse: 0
+  updateFrequency: 0.1
 --- !u!1 &367534628
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,7 +470,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29a5c427e1c7c4ef4b635cc6a98b275a, type: 3}
   m_Name: 

@@ -5,23 +5,25 @@ using UnityEngine;
 public class JoystickTester : MonoBehaviour
 {
 
-    public bool checkKeys = true;
+    public int numJoysticks = 1;
     public bool checkJoysticks = true;
+    public bool checkKeys = true;
     public bool checkMouse = true;
     public float updateFrequency = 1f;
 
-    private IEnumerator Start()
+    private Vector3 mousePos;
+
+    private Vector3 mousePosDelta;
+
+    private bool mouseClicked;
+
+    private void Update()
     {
-        while (true)
-        {
-            if (checkJoysticks) doCheckJoysticks();
+        if (checkJoysticks) doCheckJoysticks();
 
-            if (checkKeys) doCheckKeys();
+        if (checkKeys) doCheckKeys();
 
-            if (checkMouse) doCheckMouse();
-
-            yield return new WaitForSeconds(updateFrequency);
-        }
+        if (checkMouse) doCheckMouse();
     }
 
     void doCheckJoysticks()
@@ -43,7 +45,7 @@ public class JoystickTester : MonoBehaviour
             {
                 if (Input.GetKeyDown(keyCode))
                 {
-                    Debug.Log("Key Pressed: " + keyCode.ToString());
+                    Debug.Log("Keypress: " + keyCode.ToString());
                 }
             }
         }
@@ -51,7 +53,12 @@ public class JoystickTester : MonoBehaviour
 
     void doCheckMouse()
     {
-        
-    }
+        mousePos = Input.mousePosition;
+        mousePosDelta.x = Input.GetAxis("Mouse X");
+        mousePosDelta.y = Input.GetAxis("Mouse Y");
+        mouseClicked = Input.GetMouseButton(0);
 
+        Debug.Log("Mouse: x " + mousePosDelta.x + " -> " + mousePos.x + ", y " + mousePosDelta.y + " -> " + mousePos.y + ", " + mouseClicked);
+    }
+   
 }
